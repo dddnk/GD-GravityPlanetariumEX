@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3 uid="uid://icysjwg7l6hd"]
+
+[ext_resource type="Script" path="res://Scripts/3DInfer.gd" id="1_xc6hv"]
+[ext_resource type="PackedScene" uid="uid://bfw17ffafl344" path="res://3DObjects/sun.tscn" id="2_btvel"]
+[ext_resource type="PackedScene" uid="uid://bi064qtuo3njm" path="res://3DObjects/comet.tscn" id="2_xqqp6"]
+[ext_resource type="PackedScene" uid="uid://ctqm3varbqbvh" path="res://3DObjects/small_planet.tscn" id="4_a0uhl"]
+[ext_resource type="PackedScene" uid="uid://bdi6louk7f2ip" path="res://3DObjects/big_planet.tscn" id="5_nkljk"]
+[ext_resource type="Script" path="res://Scripts/3DBHNode.gd" id="7_so36y"]
+
+[sub_resource type="GDScript" id="GDScript_yf2rn"]
+resource_name = "CameraSpinhub"
+script/source = "extends Node3D
+@export var XspinHub:Node3D
+@export var Sensitivity:float = 1
+@export var Lock:Vector2 = Vector2.ZERO
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+func GetAxis(CA,CB):
+	return 1 if CA else (-1 if CB else 0)
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+		var FB:float = GetAxis(Input.is_action_pressed('CamDown'),Input.is_action_pressed('CamUp'))*Sensitivity
+		var LR:float = GetAxis(Input.is_action_pressed('CamRight'),Input.is_action_pressed('CamLeft'))*Sensitivity
+		#var UD = GetAxis(Input.is_action_pressed('CamUp'),Input.is_action_pressed('CamDown'))*Sensitivity
+		FB += Lock.x
+		LR += Lock.y
+		XspinHub.rotate_x(FB * delta)
+		self.rotate_y(LR * delta)
+"
+
+[sub_resource type="Environment" id="Environment_8snlu"]
+background_mode = 1
+background_color = Color(0, 1.50409e-08, 0.14266, 1)
+
+[node name="Node3D" type="Node3D" node_paths=PackedStringArray("RootNode")]
+script = ExtResource("1_xc6hv")
+RootNode = NodePath("Root")
+IndependentDeltatime = 1.0
+BodiesList = Array[PackedScene]([ExtResource("2_xqqp6"), ExtResource("4_a0uhl"), ExtResource("5_nkljk"), ExtResource("2_btvel")])
+Quantities = Array[int]([800, 200, 100, 20])
+
+[node name="SpinHub" type="Node3D" parent="." node_paths=PackedStringArray("XspinHub")]
+script = SubResource("GDScript_yf2rn")
+XspinHub = NodePath("Xspin")
+
+[node name="Xspin" type="Node3D" parent="SpinHub"]
+
+[node name="Camera3D" type="Camera3D" parent="SpinHub/Xspin"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 50)
+environment = SubResource("Environment_8snlu")
+
+[node name="Root" type="Node3D" parent="."]
+script = ExtResource("7_so36y")

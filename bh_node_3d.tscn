@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://44pmt41j6ore"]
+
+[ext_resource type="Script" path="res://Scripts/3DBHNode.gd" id="1_ni8cp"]
+
+[node name="BHNode3D" type="Node3D"]
+script = ExtResource("1_ni8cp")

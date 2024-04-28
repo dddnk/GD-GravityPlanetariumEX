@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://254tckey5ro2"]
+
+[ext_resource type="Texture2D" uid="uid://b3xaja03kx35b" path="res://SuperMassiveBH.png" id="1_8qwpq"]
+[ext_resource type="Script" path="res://Scripts/3DGravityObj.gd" id="2_j7clv"]
+
+[node name="Blackhole" type="Sprite3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50, 0)
+gi_mode = 0
+pixel_size = 0.002
+billboard = 1
+fixed_size = true
+texture_filter = 0
+texture = ExtResource("1_8qwpq")
+region_rect = Rect2(0, 24, 8, 8)
+script = ExtResource("2_j7clv")
+Mass = 10000

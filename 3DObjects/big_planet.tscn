@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bdi6louk7f2ip"]
+
+[ext_resource type="Texture2D" uid="uid://ce2f4ywlv4okd" path="res://Ball.png" id="1_fp0no"]
+[ext_resource type="Script" path="res://Scripts/3DGravityObj.gd" id="2_f45ae"]
+
+[node name="Big Planet" type="Sprite3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20.385)
+gi_mode = 0
+pixel_size = 0.002
+billboard = 1
+fixed_size = true
+texture_filter = 0
+texture = ExtResource("1_fp0no")
+region_enabled = true
+region_rect = Rect2(0, 16, 8, 8)
+script = ExtResource("2_f45ae")
+Mass = 65
+Radius = 3.0
